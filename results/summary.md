@@ -1,0 +1,29 @@
+### tvr
+
+| representation | update | step size | w=0.3 | w=0.5 | w=0.7 | w=0.9 | w=1.0 | w=1.1 | w=1.3 | w=1.5 | w=2.0 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| tabular | expected | 0.01 | 1.5e+00 | 1.2e+00 | 9.9e-01 | 8.1e-01 | 7.4e-01 | 6.7e-01 | 5.5e-01 | 4.5e-01 | 2.7e-01 |
+| tabular | expected | 0.1 | 1.0e-01 | 1.3e-02 | 1.8e-03 | 2.5e-04 | 9.1e-05 | 3.3e-05 | 4.5e-06 | 6.1e-07 | 4.1e-09 |
+| tabular | expected | 0.5 | 6.1e-07 | 2.7e-11 | 1.2e-15 | 5.4e-20 | 3.6e-22 | 2.4e-24 | 1.1e-28 | 4.7e-33 | 5.8e-44 |
+| linear | expected | 0.01 | DIV | DIV | DIV | DIV | DIV | DIV | DIV | DIV | DIV |
+| linear | expected | 0.1 | DIV | DIV | DIV | DIV | DIV | DIV | DIV | DIV | DIV |
+| linear | expected | 0.5 | DIV | DIV | DIV | DIV | DIV | DIV | DIV | DIV | DIV |
+| neural | sgd | 0.001 | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) |
+| neural | sgd | 0.01 | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) | - (5/5 div) |
+| neural | adam | 0.0001 | 3.3e+02 | 3.3e+02 | 3.3e+02 | 3.3e+02 | 3.3e+02 | 3.3e+02 | 3.3e+02 | 3.3e+02 | 3.3e+02 |
+| neural | adam | 0.001 | 3.2e+04 | 3.2e+04 | 3.2e+04 | 3.2e+04 | 3.2e+04 | 3.2e+04 | 3.2e+04 | 3.2e+04 | 3.2e+04 |
+
+### baird
+
+| representation | update | step size | w=0.3 | w=0.5 | w=0.7 | w=0.9 | w=1.0 | w=1.1 | w=1.3 | w=1.5 | w=2.0 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| tabular | expected | 0.01 | 1.2e+01 | 1.2e+01 | 1.2e+01 | 1.2e+01 | 1.2e+01 | 1.1e+01 | 1.1e+01 | 1.1e+01 | 1.1e+01 |
+| tabular | expected | 0.1 | 1.1e+01 | 9.8e+00 | 9.0e+00 | 8.3e+00 | 8.0e+00 | 7.7e+00 | 7.1e+00 | 6.5e+00 | 5.3e+00 |
+| tabular | expected | 0.5 | 6.5e+00 | 4.3e+00 | 2.9e+00 | 1.9e+00 | 1.6e+00 | 1.3e+00 | 8.5e-01 | 5.6e-01 | 2.0e-01 |
+| linear | expected | 0.01 | 4.6e+02 | 2.0e+03 | 8.1e+03 | 3.2e+04 | 6.4e+04 | 1.3e+05 | 4.9e+05 | DIV | DIV |
+| linear | expected | 0.1 | DIV | DIV | DIV | DIV | DIV | DIV | DIV | DIV | DIV |
+| linear | expected | 0.5 | DIV | DIV | DIV | DIV | DIV | DIV | DIV | DIV | DIV |
+| neural | sgd | 0.001 | 1.2e+00 | 1.4e+00 | 2.5e+00 | 6.2e+00 | 1.2e+01 | 1.4e+01 | 8.7e+00 | 5.8e+00 | 3.0e+00 |
+| neural | sgd | 0.01 | 1.3e+00 (2/5 div) | 6.5e-01 (1/5 div) | 3.7e-01 | 2.5e-01 | 2.1e-01 | 1.8e-01 | 1.3e-01 | 9.6e-02 | 4.3e-02 |
+| neural | adam | 0.0001 | 3.3e-02 | 1.3e-04 | 2.4e-03 | 2.9e-03 | 1.8e-03 | 8.1e-03 | 2.3e-02 | 2.8e-03 | 2.3e-04 |
+| neural | adam | 0.001 | 9.9e-02 | 3.8e-02 | 7.1e-02 | 1.2e-03 | 5.7e-02 | 2.6e-02 | 2.0e-05 | 1.1e-03 | 6.1e-05 |
