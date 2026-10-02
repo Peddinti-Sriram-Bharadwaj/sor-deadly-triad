@@ -80,6 +80,53 @@ non-divergent runs, with the number of divergent seeds in brackets.
 | neural | adam | 0.0001 | 3.3e-02 | 1.3e-04 | 2.4e-03 | 2.9e-03 | 1.8e-03 | 8.1e-03 | 2.3e-02 | 2.8e-03 | 2.3e-04 |
 | neural | adam | 0.001 | 9.9e-02 | 3.8e-02 | 7.1e-02 | 1.2e-03 | 5.7e-02 | 2.6e-02 | 2.0e-05 | 1.1e-03 | 6.1e-05 |
 
+## Optimisation geometry: why Adam drifts where SGD diverges
+
+`viz/landscape.py` visualises the neural learner (ω = 1, seed 0). Semi-gradient TD is not
+gradient descent on a fixed loss: its target moves with the parameters, so its update field is in
+general not the gradient of any function. The plots therefore draw the expected TD update against a
+*fixed* objective, the value error E(θ) = Σ d(s,a) Q_θ(s,a)² (Q* = 0 here), on a plane through the
+initial parameters spanned by the first two principal components of the SGD and Adam trajectories
+(Li et al., 2018, §7). Arrows are the expected update projected onto that plane.
+
+![Tsitsiklis & Van Roy: update field and trajectories](viz/figures/fig_plane_tvr.png)
+
+**Tsitsiklis & Van Roy.** Almost everywhere on the plane, the expected TD update points *away* from
+the low-error region: following the update increases the true error. This is the deadly triad as a
+picture. Both optimisers follow the field outward. SGD's steps scale with the update, which grows
+with the error, so it accelerates and diverges after about 1,340 updates. Adam normalises each
+parameter's step to roughly its learning rate, so it moves outward along a nearly straight line at
+bounded speed.
+
+![Tsitsiklis & Van Roy: growth of |Q| and of the parameters](viz/figures/fig_drift.png)
+
+**The Adam "plateau" is slow, unbounded drift.** On log–log axes, Adam's distance from its
+initialisation grows as about t^0.8–0.85 and max |Q| as about t^1.5–1.6, so max |Q| grows roughly as
+the square of the parameter displacement, as expected for a two-layer network whose output is a
+product of two weight layers. A tenfold learning rate therefore gives roughly a hundredfold larger
+error after the same number of updates (332 against 3.2 × 10⁴ after 20,000). SGD instead grows
+super-exponentially and crosses the divergence threshold. Neither converges; the difference is only
+the speed at which they leave.
+
+![Baird: update field and trajectories](viz/figures/fig_plane_baird.png)
+
+**Baird's star.** Here the field rotates and partly points into a low-error valley. Adam spirals into
+that valley and settles with small oscillations (final value error 0.012); SGD makes a long
+excursion away from the initialisation before returning (final value error 0.047). With a
+non-linear network the classic linear trap is largely avoided, consistent with the results table.
+
+![1-D slices](viz/figures/fig_slices_tvr.png)
+
+The 1-D slices (Li et al., 2018, filter-normalised random direction) show the value error and the
+TD loss with its target frozen at the centre point. The frozen-target loss always has a minimum
+near the centre, which is what each update descends; the value error along the same direction
+does not, which is why descending a sequence of frozen-target losses need not reduce it. The
+Baird slices are in `viz/figures/fig_slices_baird.png`.
+
+These are two-dimensional projections of a 97-parameter (Tsitsiklis & Van Roy) and 354-parameter
+(Baird) space, from a single seed; they illustrate the mechanisms in the table rather than measure
+them.
+
 ## Setup
 
 | | |
@@ -103,10 +150,11 @@ Baird (1995) and Sutton & Barto (2018) present the problem for policy evaluation
 ## Usage
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.txt matplotlib
 python -m pytest                    # analytic checks, a few seconds
 python run.py                       # full grid, about 10-15 minutes on 8 cores
 python run.py --steps 2000 --seeds 1 --workers 2   # quick check
+python viz/landscape.py             # figures in viz/figures/, about a minute
 ```
 
 `run.py` writes `results/results.jsonl` (one record per run) and `results/summary.md` (the
@@ -118,6 +166,7 @@ tables above).
 sor_triad/problems.py   the two counterexamples and their feature maps
 sor_triad/learners.py   the SOR target; expected-update and neural learners
 run.py                  the experiment grid and summary tables
+viz/landscape.py        optimisation-geometry figures (update field, slices, drift)
 tests/                  closed-form and sanity checks
 results/                results.jsonl, summary.md, run.log
 ```
@@ -139,6 +188,8 @@ results/                results.jsonl, summary.md, run.log
   *IEEE Control Systems Letters*, 4(1).
 - Kingma, D. P., & Ba, J. (2015). Adam: A method for stochastic optimization. *International
   Conference on Learning Representations (ICLR)*.
+- Li, H., Xu, Z., Taylor, G., Studer, C., & Goldstein, T. (2018). Visualizing the loss landscape
+  of neural nets. *Advances in Neural Information Processing Systems (NeurIPS)*.
 - Mnih, V., et al. (2015). Human-level control through deep reinforcement learning. *Nature*,
   518, 529–533.
 - Sutton, R. S., & Barto, A. G. (2018). *Reinforcement Learning: An Introduction* (2nd ed.),

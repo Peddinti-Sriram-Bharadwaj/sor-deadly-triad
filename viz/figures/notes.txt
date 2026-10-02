@@ -1,0 +1,7 @@
+tvr sgd lr 0.001: 27 recorded points, last update 1350, final max|Q| 223, final value error nan
+tvr adam lr 0.0001: 400 recorded points, last update 20000, final max|Q| 332, final value error 7.97e+04
+baird sgd lr 0.01: 400 recorded points, last update 20000, final max|Q| 0.224, final value error 0.0466
+baird adam lr 0.001: 400 recorded points, last update 20000, final max|Q| 0.113, final value error 0.0122
+SGD lr 0.001: diverged after 1340 updates
+Adam lr 0.0001: max|Q| ~ t^1.54, ||θ-θ0|| ~ t^0.85, final max|Q| = 332
+Adam lr 0.001: max|Q| ~ t^1.59, ||θ-θ0|| ~ t^0.80, final max|Q| = 3.2e+04
