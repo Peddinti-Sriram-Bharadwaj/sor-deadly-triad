@@ -117,11 +117,13 @@ non-linear network the classic linear trap is largely avoided, consistent with t
 
 ![1-D slices](viz/figures/fig_slices_tvr.png)
 
-The 1-D slices (Li et al., 2018, filter-normalised random direction) show the value error and the
-TD loss with its target frozen at the centre point. The frozen-target loss always has a minimum
-near the centre, which is what each update descends; the value error along the same direction
-does not, which is why descending a sequence of frozen-target losses need not reduce it. The
-Baird slices are in `viz/figures/fig_slices_baird.png`.
+The 1-D slices (Li et al., 2018) show the value error and the TD loss with its target frozen at
+the centre point, along a random filter-normalised direction. At the initialisation both are
+bowl-shaped around the centre. At the end points of SGD and Adam both are almost flat across the
+slice, at an error several orders of magnitude higher. A random direction is nearly orthogonal to
+the drift, so these slices see only a high, flat plateau; the drift lives along the specific
+directions that the trajectory-aligned plane above captures, which is why that plane, not random
+slices, is the informative view here. The Baird slices are in `viz/figures/fig_slices_baird.png`.
 
 These are two-dimensional projections of a 97-parameter (Tsitsiklis & Van Roy) and 354-parameter
 (Baird) space, from a single seed; they illustrate the mechanisms in the table rather than measure
